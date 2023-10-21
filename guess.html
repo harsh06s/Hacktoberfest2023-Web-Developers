@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Logo Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .game-container {
+            background-color: #fff;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        .logo-container {
+            margin: 20px 0;
+        }
+
+        #logo {
+            max-width: 100%;
+        }
+
+        #guess {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        #check {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #check:hover {
+            background-color: #0056b3;
+        }
+
+        #message {
+            font-weight: bold;
+            color: #007BFF;
+        }
+    </style>
+
+    <div class="game-container">
+        <h1>Guess the Logo</h1>
+        <div class="logo-container">
+            <img id="logo" src="logo1.png" alt="Logo">
+        </div>
+        <input type="text" id="guess" placeholder="Your Guess">
+        <button id="check">Check</button>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        const logos = ["logo1.png", "logo2.png", "logo3.png", "logo4.png", "logo5.png"];
+        const brands = ["Apple", "Google", "Amazon", "Microsoft", "Facebook"];
+
+        const logo = document.getElementById("logo");
+        const guessInput = document.getElementById("guess");
+        const checkButton = document.getElementById("check");
+        const message = document.getElementById("message");
+
+        let currentLogoIndex = 0;
+
+        function displayLogo(index) {
+            logo.src = logos[index];
+            guessInput.value = "";
+            message.textContent = "";
+        }
+
+        function checkGuess() {
+            const userGuess = guessInput.value.trim().toLowerCase();
+            const correctBrand = brands[currentLogoIndex].toLowerCase();
+
+            if (userGuess === correctBrand) {
+                message.textContent = "Correct!";
+            } else {
+                message.textContent = `Wrong! It's ${brands[currentLogoIndex]}.`;
+            }
+
+            if (currentLogoIndex < logos.length - 1) {
+                currentLogoIndex++;
+                displayLogo(currentLogoIndex);
+            } else {
+                message.textContent = "Game Over!";
+                checkButton.disabled = true;
+            }
+        }
+
+        displayLogo(currentLogoIndex);
+        checkButton.addEventListener("click", checkGuess);
+    </script>
+</body>
+</html>
